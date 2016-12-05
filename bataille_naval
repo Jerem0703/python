@@ -1,0 +1,169 @@
+#!/usr/bin/python
+#coding: utf-8
+
+#Fonction pour placer les bateaux
+
+def placement_bateau(tab):
+
+	print "Bateau1 : 4 cases"
+	
+	pos = raw_input()				### Ces lignes de codes permettent à l'utilisateur d'entrer ses positions comme ceci : A1
+	postab = list(pos)				### L'algo les convertira ensuite
+	postab[0] = str(postab[0])      ### Cette ligne est inutile (je crois) mais bon au moins c'est clair
+	postab[1] = int(postab[1])      ### On convertie le 1 qui était un char en numérique pour pouvoir le manipuler
+	c = postab[0]
+	l = postab[1]
+	c = ord(c) - 64					### Fin de la conversion (ici on prend l'ascii de c et on lui enleve 64, ainsi A correspondra à 1
+
+	tab[l][c] = 1
+
+	for i in range(0,3):
+		pos = raw_input()
+		postab = list(pos)
+		postab[0] = str(postab[0])
+		postab[1] = int(postab[1])
+		c = postab[0]
+		l = postab[1]
+		c = ord(c) - 64
+
+		while (tab[l][c] == 1): 
+			print "Mauvaise position (déjà prise)\nRecommencez"
+			pos = raw_input()
+			postab = list(pos)
+			postab[0] = str(postab[0])
+			postab[1] = int(postab[1])
+			c = postab[0]
+			l = postab[1]
+			c = ord(c) - 64
+
+		tab[l][c] = 1
+	
+	print "Bateau1 placé\nBateau2 : 3 cases"
+	
+	for i in range(0,3):
+		pos = raw_input()
+		postab = list(pos)
+		postab[0] = str(postab[0])
+		postab[1] = int(postab[1])
+		c = postab[0]
+		l = postab[1]
+		c = ord(c) - 64
+		while (tab[l][c] == 1): 
+			print "Mauvaise position (déjà prise)\nRecommencez"
+			pos = raw_input()
+			postab = list(pos)
+			postab[0] = str(postab[0])
+			postab[1] = int(postab[1])
+			c = postab[0]
+			l = postab[1]
+			c = ord(c) - 64
+		tab[l][c] = 1
+	
+	print "Bateau2 placé\nBateau 3 : 2 cases"
+	
+	for i in range(0,3):
+		pos = raw_input()
+		postab = list(pos)
+		postab[0] = str(postab[0])
+		postab[1] = int(postab[1])
+		c = postab[0]
+		l = postab[1]
+		c = ord(c) - 64
+		while (tab[l][c] == 1): 
+			print "Mauvaise position (déjà prise)\nRecommencez"
+			pos = raw_input()
+			postab = list(pos)
+			postab[0] = str(postab[0])
+			postab[1] = int(postab[1])
+			c = postab[0]
+			l = postab[1]
+			c = ord(c) - 64
+		tab[l][c] = 1
+
+	print "Bateau3 placé : Tous vos bateaux sont placés"
+
+#Fonction terminée
+
+		
+#La fonction main()
+
+tab1 = [[0]*9 for i in range(0,9)]   #tab1 et tab2 sont les plateaux de j1 et j2
+tab2 = [[0]*9 for i in range(0,9)]
+
+compteur1 = 0 						 #Les compteurs servent à terminer la partie
+compteur2 = 0                        
+restant1 = 10						 #les restants sont des compteurs qui servent à afficher le nombre de coups restant
+restant2 = 10
+
+print "joueur 1 placez vos bateaux"
+
+placement_bateau(tab1)
+
+print "joueur 2 placez vos bateaux"
+
+placement_bateau(tab2)
+
+
+
+#Les bateaux sont placés
+
+#Les joueurs vont maintenant attaquer
+
+
+while (compteur1 != 10 and compteur2 != 10):
+	print "Au tour de joueur 1 d'attaquer"
+
+#joueur1 attaque
+
+	attaque = raw_input()			### Même chose que pour la fonction placement_bateau au début
+	attaquetab = list(attaque)
+	attaquetab[0] = str(attaquetab[0])
+	attaquetab[1] = int(attaquetab[1])
+	attaque1c = attaquetab[0]
+	attaque1l = attaquetab[1]
+	attaque1c = ord(attaque1c) - 64
+	
+	if (attaque1c < 9 or attaque1c > 1 or attaque1l < 9 or attaque1l > 1): 
+		if (tab2[attaque1l][attaque1c] == 1): #1 étant les positions des bateaux
+			restant1 -= 1
+			print "Touché !\nManquants : %s" %(restant1)
+			tab2[attaque1l][attaque1c] = 2    #2 étant les positions des bateaux touchés
+			compteur1 += 1
+		else:
+			print "raté"
+	else:
+		print "hors cadre : c'est donc raté"
+
+	print "Au tour de joueur 2 d'attaquer"
+
+#joueur2 attaque
+
+	attaque = raw_input()
+	attaquetab = list(attaque)
+	attaquetab[0] = str(attaquetab[0])
+	attaquetab[1] = int(attaquetab[1])
+	attaque2c = attaquetab[0]
+	attaque2l = attaquetab[1]
+	attaque2c = ord(attaque2c) - 64
+
+	if (attaque2c < 9 or attaque2c > 1 or attaque2l < 9 or attaque2l > 1): 
+		if (tab1[attaque2l][attaque2c] == 1): #1 étant les positions des bateaux
+			restant2 -= 1
+			print "Touché !\nManquants : %s" %(restant2)
+			tab1[attaque2l][attaque2c] = 2    #2 étant les positions des bateaux touchés
+			compteur2 += 1
+		else:
+			print "raté"
+	else:
+		print "hors cadre : c'est donc raté"
+
+
+#Condition de victoire
+
+if (compteur1 > compteur2):
+	print "\n\nBravo, joueur 1 à gagné"
+elif (compteur1 < compteur2):
+	print "\n\nBravo, joueur 2 à gagné"
+else:
+	print "\n\nWOW Egalité"
+
